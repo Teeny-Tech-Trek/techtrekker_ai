@@ -223,8 +223,4 @@ export function CTAFooter() {
       </div>
     </footer>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c8b923e6e2556401ed07dbf5decffb811f26c59b
