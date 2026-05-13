@@ -1,155 +1,308 @@
-import { useState, useEffect } from 'react';
-import heroImg from "../Images/ChatGPT Image Nov 16, 2025, 07_42_02 PM.png"
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import Cards3D from './3D/Cards3D';
+
+const FLOATING_PARTICLES = Array.from({ length: 40 }, (_, index) => ({
+  id: index,
+  size: Math.random() * 2 + 1,
+  left: `${Math.random() * 100}%`,
+  top: `${Math.random() * 100}%`,
+  opacity: 0.2 + (index % 5) * 0.05,
+}));
+
+function TechtrekkersLoader() {
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className="fixed inset-0 z-[80] flex min-h-screen items-center justify-center bg-black px-6 text-white"
+    >
+      <div className="flex min-h-screen w-full flex-col items-center justify-center">
+        <div className="flex flex-col items-center gap-5 sm:flex-row sm:gap-6">
+          <span className="techtrekkers-loader-word text-5xl font-black sm:text-7xl">
+            TechTrekkers
+          </span>
+        </div>
+
+        <p className="mt-8 text-2xl font-semibold text-white/85 sm:text-3xl">
+          Adding 3D Intelligence...
+        </p>
+
+        <div className="techtrekkers-loader-spinner mt-44 sm:mt-56" aria-hidden="true" />
+        <span className="sr-only">Loading Techtrekkers 3D hero</span>
+      </div>
+
+      <style>{`
+        .techtrekkers-loader-word {
+          background: linear-gradient(90deg, #60a5fa 0%, #a78bfa 48%, #67e8f9 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          line-height: 1;
+        }
+
+        .techtrekkers-loader-spinner {
+          width: 76px;
+          height: 76px;
+          border-radius: 999px;
+          background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.95) 0deg 9deg, transparent 9deg 18deg);
+          -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+          animation: techtrekkers-loader-spin 1.1s steps(24) infinite;
+        }
+
+        @keyframes techtrekkers-loader-spin {
+          to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 640px) {
+          .techtrekkers-loader-spinner {
+            width: 64px;
+            height: 64px;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHeroReady, setIsHeroReady] = useState(false);
+  const heroCopyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    if (!isHeroReady || !heroCopyRef.current) return;
+
+    const targets = heroCopyRef.current.querySelectorAll('.gsap-line');
+
+    gsap.set(targets, { opacity: 0, y: 40 });
+
+    gsap.to(targets, {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: 'power3.out',
+      stagger: {
+        amount: 1,
+        from: 'start',
+      },
+    });
+  }, [isHeroReady]);
+
   const scrollToProducts = () => {
     const productsSection = document.getElementById('Product');
     if (productsSection) {
-      productsSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
+      productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden ">
-      
-      {/* Main Card Container */}
-      <div className="relative w-full overflow-hidden shadow-2xl">
-        
-        {/* Blue gradient background */}
-        <div className="relative bg-gradient-to-b from-slate-950 via-blue-950/30 to-slate-950 px-12 lg:px-20 py-16 lg:py-20">
-          
-          {/* Dynamic gradient orb that follows mouse */}
-          <div 
-            className="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-3xl transition-all duration-700 ease-out pointer-events-none"
+    <section id="Home" className="relative min-h-screen overflow-hidden bg-slate-950">
+      <div
+        aria-hidden={!isHeroReady}
+        className={`transition-opacity duration-500 ${isHeroReady ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+      >
+        <div
+          className="hero-scene absolute z-0"
+          style={{
+            bottom: '-8vh',
+            right: '18px',
+            top: '-8vh',
+            width: 'min(64vw, 1020px)',
+          }}
+        >
+          <Cards3D height="100%" onReady={() => setIsHeroReady(true)} />
+        </div>
+
+        <div aria-hidden="true" className="absolute inset-0 z-[5] pointer-events-none">
+          <div
+            className="absolute h-[600px] w-[600px] rounded-full opacity-20 blur-3xl transition-all duration-700 ease-out"
             style={{
-              background: 'radial-gradient(circle, rgba(6,182,212,0.6) 0%, rgba(14,165,233,0.4) 40%, transparent 70%)',
+              background:
+                'radial-gradient(circle, rgba(6,182,212,0.6) 0%, rgba(14,165,233,0.4) 40%, transparent 70%)',
               left: `${mousePosition.x - 300}px`,
               top: `${mousePosition.y - 300}px`,
             }}
           />
 
-          {/* Ambient glow effects */}
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-cyan-400/10 rounded-full blur-[100px]"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-[100px]"></div>
+          <div className="absolute right-1/4 top-1/4 h-96 w-96 rounded-full bg-cyan-400/10 blur-[100px]" />
+          <div className="absolute bottom-1/4 left-1/4 h-96 w-96 rounded-full bg-blue-400/10 blur-[100px]" />
 
-          {/* Floating particles */}
           <div className="absolute inset-0 overflow-hidden">
-            {[...Array(40)].map((_, i) => (
+            {FLOATING_PARTICLES.map((particle) => (
               <div
-                key={i}
-                className="absolute rounded-full opacity-40"
+                key={particle.id}
+                className="absolute rounded-full bg-cyan-300"
                 style={{
-                  width: `${Math.random() * 2 + 1}px`,
-                  height: `${Math.random() * 2 + 1}px`,
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  background: 'rgba(6,182,212,0.5)',
-                  boxShadow: '0 0 4px rgba(6,182,212,0.8)'
+                  width: `${particle.size}px`,
+                  height: `${particle.size}px`,
+                  left: particle.left,
+                  top: particle.top,
+                  opacity: particle.opacity,
+                  boxShadow: '0 0 4px rgba(6,182,212,0.8)',
                 }}
               />
             ))}
           </div>
+        </div>
 
-          <div className="relative grid lg:grid-cols-2 gap-12 items-center">
-            
-            {/* Left Content */}
-            <div className="space-y-8 animate-fade-in-up z-20">
-              
-              {/* Main Headline */}
-              <h1 className="text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.05] tracking-tight text-white">
-                DEPLOY AI AGENTS THAT NEVER SLEEP
-              </h1>
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 z-10 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(2,6,23,0.97) 0%, rgba(2,6,23,0.85) 28%, rgba(2,6,23,0.35) 52%, transparent 72%)',
+          }}
+        />
 
-              {/* Description */}
-              <p className="text-lg text-white/95 leading-relaxed max-w-lg">
-                Techtrekkers.ai builds autonomous AI agents that handle your busiest workflows. From lead qualification to property analysis—your digital workforce works 24/7.
-              </p>
+        <div
+          ref={heroCopyRef}
+          className="hero-copy relative z-20 flex min-h-screen flex-col justify-center"
+          style={{
+            paddingLeft: 'clamp(2rem, 5vw, 5rem)',
+            paddingRight: 'clamp(2rem, 5vw, 5rem)',
+            paddingTop: '72px',
+            paddingBottom: '72px',
+          }}
+        >
+          <div className="space-y-8">
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <button 
-                  onClick={scrollToProducts}
-                  className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-                >
-                  Explore 
-                </button>
-              </div>
+            {/* Line 1 — Badge */}
+            <div className="gsap-line inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+              <span className="text-blue-400 text-sm" aria-hidden="true">
+                &#10022;
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
+                AI-POWERED ECOSYSTEM
+              </span>
             </div>
 
-            {/* Right Content - Visual Hero */}
-            <div className="relative h-[500px] lg:h-[600px] flex items-center justify-center animate-fade-in-up z-20" style={{ animationDelay: '0.2s' }}>
-              
-              {/* Holographic Silhouette - Behind */}
-              
+            {/* Line 2 — Heading */}
+            <h1
+              className="gsap-line font-black tracking-tight text-white"
+              style={{ fontSize: 'clamp(2.75rem, 6vw, 4rem)', lineHeight: 1.02 }}
+            >
+              Build. Automate.
+              <br />
+              <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+                Scale with AI.
+              </span>
+            </h1>
 
-              {/* Professional Woman Image - FRONT AND CENTER */}
-              <div className="relative absolute  bottom-10  h-[600px] z-30">
-                <img 
-                  src={heroImg} 
-                  alt="Professional AI Agent" 
-                  className="w-full h-full object-cover object-top"
-                  style={{
-                    filter: 'drop-shadow(0 15px 50px rgba(0,0,0,0.4))',
-                  }}
-                />
-              </div>
+            {/* Line 3 — Paragraph */}
+            <p className="gsap-line max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
+              Techtrekkers.ai delivers intelligent AI agents that handle real work. From automation to
+              digital twins and real estate, we power your next big advantage.
+            </p>
 
-              {/* Product Text - Right Side */}
-              <div className="absolute bottom-[8%] right-0 text-right space-y-3 z-40 max-w-sm">
-                <div className="space-y-1">
-                  <h2 className="text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-none drop-shadow-lg">
-                    DIGITAL TWIN
-                  </h2>
-                  <h3 className="text-2xl lg:text-3xl font-black text-white uppercase tracking-tight leading-none drop-shadow-lg">
-                    TrekEstateAgent
-                  </h3>
+            {/* Line 4 — Buttons */}
+            <div className="gsap-line flex flex-col gap-4 sm:flex-row">
+              <button
+                onClick={scrollToProducts}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-105 hover:from-blue-600 hover:to-violet-600 hover:shadow-xl hover:shadow-blue-500/40"
+              >
+                <span>Explore Products</span>
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+
+              <button className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/15">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
+                  <svg className="h-2.5 w-2.5 fill-current" viewBox="0 0 8 10" aria-hidden="true">
+                    <path d="M0 0v10l8-5z" />
+                  </svg>
+                </span>
+                <span>Watch Demo</span>
+              </button>
+            </div>
+
+            {/* Line 5 — Stats */}
+            <div className="gsap-line flex flex-wrap items-center gap-6 pt-2 sm:gap-8">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <svg className="h-4 w-4 text-violet-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+                  </svg>
+                  <span className="text-2xl font-black text-white">24/7</span>
                 </div>
-                
-                <p className="text-lg font-bold text-white leading-tight">
-                  AI Agents for Real Estate<br />
-                  that work 24/7.
-                </p>
-                
-                <p className="text-sm text-white/90 leading-relaxed">
-                  Transform real estate sales with intelligent AI agents that automate lead capture, qualification, and act as your sales assistant.
-                </p>
+                <p className="text-xs font-medium text-white/50">AI Agents Working</p>
               </div>
 
+              <div className="h-10 w-px bg-white/10" />
+
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <svg className="h-4 w-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                    />
+                  </svg>
+                  <span className="text-2xl font-black text-white">3</span>
+                </div>
+                <p className="text-xs font-medium text-white/50">Powerful Products</p>
+              </div>
+
+              <div className="h-10 w-px bg-white/10" />
+
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <svg className="h-4 w-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                  </svg>
+                  <span className="text-2xl font-black text-white">100+</span>
+                </div>
+                <p className="text-xs font-medium text-white/50">Businesses Trust Us</p>
+              </div>
             </div>
 
           </div>
-
         </div>
 
       </div>
 
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
+      {!isHeroReady && <TechtrekkersLoader />}
+
+      <style>{`
+        .hero-copy {
+          max-width: 50%;
+        }
+
+        @media (max-width: 1024px) {
+          .hero-scene {
+            bottom: -4vh;
+            right: 28px;
+            top: -4vh;
+            width: min(65vw, 850px);
           }
-          to {
-            opacity: 1;
-            transform: translateY(0);
+
+          .hero-copy {
+            max-width: min(100%, 38rem);
           }
         }
 
-        .animate-fade-in-up {
-          animation: fade-in-up 1s ease-out forwards;
+        @media (max-width: 640px) {
+          .hero-scene {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            width: auto;
+          }
+
+          .hero-copy {
+            max-width: 100%;
+          }
         }
       `}</style>
     </section>
