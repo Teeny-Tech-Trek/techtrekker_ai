@@ -106,20 +106,12 @@ function Hero() {
   };
 
   return (
-    <section id="Home" className="relative min-h-screen overflow-hidden bg-slate-950">
+    <section id="Home" className="hero-section relative min-h-screen overflow-hidden bg-slate-950">
       <div
         aria-hidden={!isHeroReady}
-        className={`transition-opacity duration-500 ${isHeroReady ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        className={`hero-wrapper transition-opacity duration-500 ${isHeroReady ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
       >
-        <div
-          className="hero-scene absolute z-0"
-          style={{
-            bottom: '-8vh',
-            right: '18px',
-            top: '-8vh',
-            width: 'min(64vw, 1020px)',
-          }}
-        >
+        <div className="hero-scene absolute z-0">
           <Cards3D height="100%" onReady={() => setIsHeroReady(true)} />
         </div>
 
@@ -157,31 +149,25 @@ function Hero() {
 
         <div
           aria-hidden="true"
-          className="absolute inset-0 z-10 pointer-events-none"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(2,6,23,0.97) 0%, rgba(2,6,23,0.85) 28%, rgba(2,6,23,0.35) 52%, transparent 72%)',
-          }}
+          className="hero-overlay absolute inset-0 z-10 pointer-events-none"
         />
 
         <div
           ref={heroCopyRef}
-          className="hero-copy relative z-20 flex min-h-screen flex-col justify-center"
+          className="hero-copy relative z-20 flex min-h-screen flex-col"
           style={{
-            paddingLeft: 'clamp(2rem, 5vw, 5rem)',
-            paddingRight: 'clamp(2rem, 5vw, 5rem)',
-            paddingTop: '72px',
-            paddingBottom: '72px',
+            paddingLeft: 'clamp(1.25rem, 5vw, 5rem)',
+            paddingRight: 'clamp(1.25rem, 5vw, 5rem)',
           }}
         >
-          <div className="space-y-8">
+          <div className="space-y-5 sm:space-y-7 lg:space-y-8">
 
             {/* Line 1 — Badge */}
-            <div className="gsap-line inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+            <div className="gsap-line inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-sm">
               <span className="text-blue-400 text-sm" aria-hidden="true">
                 &#10022;
               </span>
-              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
+              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.22em] sm:tracking-[0.28em] text-white/70">
                 AI-POWERED ECOSYSTEM
               </span>
             </div>
@@ -189,7 +175,7 @@ function Hero() {
             {/* Line 2 — Heading */}
             <h1
               className="gsap-line font-black tracking-tight text-white"
-              style={{ fontSize: 'clamp(2.75rem, 6vw, 4rem)', lineHeight: 1.02 }}
+              style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)', lineHeight: 1.05 }}
             >
               Build. Automate.
               <br />
@@ -199,22 +185,22 @@ function Hero() {
             </h1>
 
             {/* Line 3 — Paragraph */}
-            <p className="gsap-line max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
+            <p className="gsap-line max-w-xl text-sm leading-relaxed text-white/70 sm:text-base lg:text-lg">
               Techtrekkers.ai delivers intelligent AI agents that handle real work. From automation to
               digital twins and real estate, we power your next big advantage.
             </p>
 
             {/* Line 4 — Buttons */}
-            <div className="gsap-line flex flex-col gap-4 sm:flex-row">
+            <div className="gsap-line flex flex-col gap-3 sm:flex-row sm:gap-4">
               <button
                 onClick={scrollToProducts}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-105 hover:from-blue-600 hover:to-violet-600 hover:shadow-xl hover:shadow-blue-500/40"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-3 sm:px-7 sm:py-3.5 text-sm sm:text-base font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-105 hover:from-blue-600 hover:to-violet-600 hover:shadow-xl hover:shadow-blue-500/40"
               >
                 <span>Explore Products</span>
                 <span aria-hidden="true">&rarr;</span>
               </button>
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/15">
+              <button className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-5 py-3 sm:px-7 sm:py-3.5 text-sm sm:text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/15">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
                   <svg className="h-2.5 w-2.5 fill-current" viewBox="0 0 8 10" aria-hidden="true">
                     <path d="M0 0v10l8-5z" />
@@ -225,18 +211,18 @@ function Hero() {
             </div>
 
             {/* Line 5 — Stats */}
-            <div className="gsap-line flex flex-wrap items-center gap-6 pt-2 sm:gap-8">
+            <div className="gsap-line flex flex-wrap items-center gap-4 pt-2 sm:gap-6 lg:gap-8">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <svg className="h-4 w-4 text-violet-400" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
                   </svg>
-                  <span className="text-2xl font-black text-white">24/7</span>
+                  <span className="text-xl sm:text-2xl font-black text-white">24/7</span>
                 </div>
-                <p className="text-xs font-medium text-white/50">AI Agents Working</p>
+                <p className="text-[11px] sm:text-xs font-medium text-white/50">AI Agents Working</p>
               </div>
 
-              <div className="h-10 w-px bg-white/10" />
+              <div className="hidden sm:block h-10 w-px bg-white/10" />
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -248,21 +234,21 @@ function Hero() {
                       d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
                     />
                   </svg>
-                  <span className="text-2xl font-black text-white">3</span>
+                  <span className="text-xl sm:text-2xl font-black text-white">3</span>
                 </div>
-                <p className="text-xs font-medium text-white/50">Powerful Products</p>
+                <p className="text-[11px] sm:text-xs font-medium text-white/50">Powerful Products</p>
               </div>
 
-              <div className="h-10 w-px bg-white/10" />
+              <div className="hidden sm:block h-10 w-px bg-white/10" />
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <svg className="h-4 w-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                   </svg>
-                  <span className="text-2xl font-black text-white">100+</span>
+                  <span className="text-xl sm:text-2xl font-black text-white">5+</span>
                 </div>
-                <p className="text-xs font-medium text-white/50">Businesses Trust Us</p>
+                <p className="text-[11px] sm:text-xs font-medium text-white/50">Businesses Trust Us</p>
               </div>
             </div>
 
@@ -274,34 +260,114 @@ function Hero() {
       {!isHeroReady && <TechtrekkersLoader />}
 
       <style>{`
-        .hero-copy {
-          max-width: 50%;
+        /* Default: large desktops / monitors — text LEFT half, 3D RIGHT half */
+        .hero-scene {
+          top: -8vh;
+          bottom: -8vh;
+          right: 18px;
+          width: min(64vw, 1020px);
         }
 
+        .hero-copy {
+          max-width: 50%;
+          padding-top: 92px;
+          padding-bottom: 72px;
+          justify-content: center;
+        }
+
+        .hero-overlay {
+          background: linear-gradient(
+            to right,
+            rgba(2,6,23,0.97) 0%,
+            rgba(2,6,23,0.85) 28%,
+            rgba(2,6,23,0.35) 52%,
+            transparent 72%
+          );
+        }
+
+        /* Ultra-wide monitors — keep proportions */
+        @media (min-width: 1920px) {
+          .hero-scene {
+            width: min(60vw, 1300px);
+            right: 40px;
+          }
+          .hero-copy {
+            max-width: 48%;
+            padding-left: clamp(3rem, 8vw, 10rem) !important;
+          }
+        }
+
+        /* Tablets / small laptops */
         @media (max-width: 1024px) {
           .hero-scene {
             bottom: -4vh;
-            right: 28px;
+            right: 12px;
             top: -4vh;
-            width: min(65vw, 850px);
+            width: min(65vw, 820px);
           }
-
           .hero-copy {
             max-width: min(100%, 38rem);
           }
         }
 
-        @media (max-width: 640px) {
-          .hero-scene {
-            bottom: 0;
-            left: 0;
-            right: 0;
-            top: 0;
-            width: auto;
+        /* Tablets portrait — text on top, 3D scene below */
+        @media (max-width: 900px) {
+          .hero-section {
+            min-height: auto;
           }
-
+          .hero-wrapper {
+            display: flex;
+            flex-direction: column;
+          }
           .hero-copy {
+            order: 1;
             max-width: 100%;
+            min-height: auto;
+            padding-top: 96px;
+            padding-bottom: 24px;
+            justify-content: flex-start;
+          }
+          .hero-scene {
+            order: 2;
+            position: relative;
+            inset: auto;
+            width: 100%;
+            margin-left: 0;
+            height: 65vh;
+            min-height: 460px;
+            margin-top: -10px;
+            opacity: 1;
+          }
+          .hero-overlay {
+            display: none;
+          }
+        }
+
+        /* Mobile phones */
+        @media (max-width: 640px) {
+          .hero-copy {
+            padding-top: 84px;
+            padding-bottom: 12px;
+          }
+          .hero-scene {
+            width: 105%;
+            margin-left: -2.5%;
+            height: 60vh;
+            min-height: 420px;
+            margin-top: 0;
+          }
+        }
+
+        /* Small phones */
+        @media (max-width: 380px) {
+          .hero-copy {
+            padding-top: 80px;
+          }
+          .hero-scene {
+            width: 108%;
+            margin-left: -4%;
+            height: 56vh;
+            min-height: 380px;
           }
         }
       `}</style>

@@ -768,9 +768,23 @@ function ResponsiveCamera() {
   const {camera,size}=useThree()
   useEffect(()=>{
     const w=size.width
-    if (w<640){      camera.fov=72; camera.position.set(1.2,1.0,15.0) }
-    else if (w<1024){ camera.fov=58; camera.position.set(1.2,1.6,13.0) }
-    else {            camera.fov=48; camera.position.set(1.2,2.2,11.5) }
+    if (w<380) {            // very small phones
+      camera.fov=72; camera.position.set(1.1,1.0,13.0)
+    } else if (w<480) {     // small phones
+      camera.fov=68; camera.position.set(1.1,1.2,12.6)
+    } else if (w<640) {     // phones
+      camera.fov=64; camera.position.set(1.1,1.4,12.2)
+    } else if (w<900) {     // tablets portrait
+      camera.fov=58; camera.position.set(1.2,1.6,12.0)
+    } else if (w<1024) {    // tablets landscape
+      camera.fov=58; camera.position.set(1.2,1.6,13.0)
+    } else if (w<1440) {    // laptops
+      camera.fov=50; camera.position.set(1.2,2.2,11.8)
+    } else if (w<1920) {    // desktops
+      camera.fov=46; camera.position.set(1.2,2.2,11.2)
+    } else {                // ultra-wide / 4K
+      camera.fov=42; camera.position.set(1.2,2.4,10.6)
+    }
     camera.updateProjectionMatrix()
   },[size.width])
   return null

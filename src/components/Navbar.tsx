@@ -45,7 +45,7 @@ const navLinks = [
   { label: "Products", target: "Product", hasDropdown: true },
   { label: "Why Us", target: "Benefits" },
   { label: "Demo Video", target: "Demo" },
-  { label: "Contact", target: "Contact" },
+  // { label: "Contact", target: "Contact" },
 ];
 
 export default function Navbar() {
@@ -79,17 +79,17 @@ export default function Navbar() {
         WebkitBackdropFilter: scrolled ? "blur(18px)" : "none",
       }}
     >
-      <div className="mx-auto flex items-center justify-between px-6 py-3">
+      <div className="mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-10 xl:px-16 2xl:px-24 py-3 max-w-[1920px]">
 
         {/* Logo */}
         <button
           type="button"
           onClick={() => scrollToSection("Home")}
-          className="flex items-center gap-2 select-none"
+          className="flex items-center gap-2 select-none shrink-0"
         >
-          <img src="/Logo.png" alt="logo" width={40} />
+          <img src="/Logo.png" alt="logo" className="w-8 sm:w-10" />
           <span
-            className="text-white font-semibold text-2xl"
+            className="text-white font-semibold text-lg sm:text-xl md:text-2xl"
             style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif", letterSpacing: "-0.01em" }}
           >
             Techtrekkers
@@ -97,7 +97,7 @@ export default function Navbar() {
         </button>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-1 lg:gap-2">
           {navLinks.map((link) => (
             <div key={link.label} className="relative">
               <button
@@ -149,7 +149,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center">
           <button
             type="button"
-            onClick={() => scrollToSection("Contact")}
+            onClick={() => scrollToSection("Product")}
             className="px-5 py-2 text-sm font-medium text-white rounded-full transition-all duration-200"
             style={{
               fontFamily: "'DM Sans', sans-serif",
@@ -160,7 +160,7 @@ export default function Navbar() {
             onMouseEnter={(e) => { (e.currentTarget).style.background = "rgba(255,255,255,0.14)"; }}
             onMouseLeave={(e) => { (e.currentTarget).style.background = "rgba(255,255,255,0.08)"; }}
           >
-            Book a Demo
+            Get Started
           </button>
         </div>
 

@@ -165,7 +165,7 @@ export function ProductSpotlights() {
   return (
     <section
       id="Product"
-      className="relative overflow-hidden bg-[#020817] py-24 px-6 lg:px-16"
+      className="relative overflow-hidden bg-[#020817] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-16 xl:px-20"
       style={{ background: "linear-gradient(180deg,#020817 0%,#07112e 45%,#020817 100%)" }}
     >
       {/* ── Keyframes injected once ── */}
@@ -223,10 +223,10 @@ export function ProductSpotlights() {
       <div className="absolute top-[50%] left-[42%] w-60 h-60 rounded-full blur-[90px] bg-teal-500/[.05] pointer-events-none z-0" />
 
       {/* ══════════════════ CONTENT ══════════════════ */}
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 max-w-7xl 2xl:max-w-[1500px] mx-auto">
 
         {/* ── Header ── */}
-        <div className="ps-fadeup text-center mb-20" style={{ animationDelay: "0s" }}>
+        <div className="ps-fadeup text-center mb-14 sm:mb-16 lg:mb-20" style={{ animationDelay: "0s" }}>
           {/* pill */}
           <div className="inline-flex items-center gap-2 px-5 py-[6px] rounded-full border border-indigo-500/30 bg-indigo-500/10 mb-6">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="#818CF8">
@@ -238,7 +238,7 @@ export function ProductSpotlights() {
           </div>
 
           {/* heading */}
-          <h2 className="ps-font text-[clamp(34px,4.5vw,58px)] font-black leading-[1.08] tracking-tight text-white mb-5">
+          <h2 className="ps-font text-[clamp(26px,5vw,58px)] font-black leading-[1.08] tracking-tight text-white mb-4 sm:mb-5">
             Three Powerful AI Solutions,
             <br />
             <span
@@ -254,15 +254,16 @@ export function ProductSpotlights() {
             </span>
           </h2>
 
-          <p className="text-white text-base  mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base mx-auto leading-relaxed px-2">
             Innovative AI-powered products designed to automate, engage,
-            <br />
+            <br className="hidden sm:block" />
+            <span className="sm:hidden"> </span>
             and elevate your business to the next level.
           </p>
         </div>
 
         {/* ── Cards grid — extra pt so imgs don't clip ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-[90px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[120px] sm:gap-y-[110px] md:gap-y-6 md:gap-6 lg:gap-7 pt-[110px] sm:pt-[120px] md:pt-[100px]">
           {PRODUCTS.map((p, idx) => (
             <div
               key={p.id}
@@ -275,10 +276,10 @@ export function ProductSpotlights() {
               style={{ animationDelay: `${0.12 * (idx + 1)}s` }}
             >
               {/* ── Floating image — overflows above card ── */}
-              <div className="absolute left-1/2 -translate-x-1/2 -top-[100px] w-[260px] h-[200px] flex items-end justify-center pointer-events-none z-10">
+              <div className="absolute left-1/2 -translate-x-1/2 -top-[90px] sm:-top-[100px] w-[200px] sm:w-[230px] lg:w-[260px] h-[170px] sm:h-[185px] lg:h-[200px] flex items-end justify-center pointer-events-none z-10">
                 {/* accent glow */}
                 <div
-                  className="ps-pulse-anim absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-40 h-12 rounded-full blur-[32px] transition-opacity duration-500 opacity-30 group-hover:opacity-60"
+                  className="ps-pulse-anim absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-32 sm:w-40 h-10 sm:h-12 rounded-full blur-[32px] transition-opacity duration-500 opacity-30 group-hover:opacity-60"
                   style={{ background: p.accentHex, animationDelay: `${idx * 0.8}s` }}
                 />
                 {/* image */}
@@ -290,14 +291,14 @@ export function ProductSpotlights() {
                     src={p.img}
                     alt={p.title}
                     draggable={false}
-                    className="ps-img max-h-[190px] w-auto max-w-full object-contain"
+                    className="ps-img max-h-[160px] sm:max-h-[175px] lg:max-h-[190px] w-auto max-w-full object-contain"
                     style={{ filter: `drop-shadow(0 0 22px ${p.accentHex}88)` }}
                   />
                 </div>
               </div>
 
               {/* ── Card body ── */}
-              <div className="flex flex-col flex-1 px-6 pb-7 pt-[118px]">
+              <div className="flex flex-col flex-1 px-5 sm:px-6 pb-6 sm:pb-7 pt-[100px] sm:pt-[110px] lg:pt-[118px]">
                 {/* top accent line */}
                 <div
                   className="w-full h-px mb-5"
@@ -305,25 +306,25 @@ export function ProductSpotlights() {
                 />
 
                 {/* icon + title */}
-                <div className="flex items-center gap-[14px] mb-4">
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${p.iconBgClass}`}>
+                <div className="flex items-center gap-3 sm:gap-[14px] mb-3 sm:mb-4">
+                  <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${p.iconBgClass}`}>
                     {p.icon}
                   </div>
-                  <h3 className="ps-font text-[22px] font-black text-white tracking-tight">
+                  <h3 className="ps-font text-[20px] sm:text-[22px] font-black text-white tracking-tight">
                     {p.title}
                   </h3>
                 </div>
 
                 {/* description */}
              <div className="flex flex-col h-full">
-  
-              <p className="text-white/80 text-[13.5px] leading-[1.75] mb-5 min-h-[80px]">
+
+              <p className="text-white/80 text-[13px] sm:text-[13.5px] leading-[1.7] mb-4 sm:mb-5 min-h-0 md:min-h-[80px]">
               {truncateText(p.description)}
             </p>
 
-              <ul className="flex flex-col gap-[10px] mb-6 flex-1">
+              <ul className="flex flex-col gap-[10px] mb-5 sm:mb-6 flex-1">
                 {p.features.map((feat, fi) => (
-                  <li key={fi} className="flex items-start gap-[10px] text-white text-[13.5px] cursor-pointer leading-snug hover:text-[14.5px] transition-colors duration-200">
+                  <li key={fi} className="flex items-start gap-[10px] text-white text-[13px] sm:text-[13.5px] cursor-pointer leading-snug hover:text-[14.5px] transition-colors duration-200">
                     <CheckIcon hex={p.accentHex} />
                     <span>{feat}</span>
                   </li>
@@ -333,12 +334,12 @@ export function ProductSpotlights() {
             </div>
 
                 {/* CTA buttons */}
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={() => window.open(p.url, "_blank")}
                     className={`
-                      flex-1 flex items-center justify-center gap-[6px] py-[13px] px-4
-                      rounded-xl text-white text-[13.5px] font-bold ps-font
+                      flex-1 flex items-center justify-center gap-[6px] py-3 sm:py-[13px] px-4
+                      rounded-xl text-white text-[13px] sm:text-[13.5px] font-bold ps-font
                       transition-all duration-200 hover:brightness-110 hover:-translate-y-[2px] active:scale-[.98]
                       ${p.btnClass}
                     `}
@@ -351,8 +352,8 @@ export function ProductSpotlights() {
                     onClick={() => p.video && openModal(p.video, `${p.title} Demo`)}
                     disabled={!p.video}
                     className={`
-                      flex-1 flex items-center justify-center gap-[7px] py-[13px] px-4
-                      rounded-xl text-white text-[13.5px] font-semibold ps-font
+                      flex-1 flex items-center justify-center gap-[7px] py-3 sm:py-[13px] px-4
+                      rounded-xl text-white text-[13px] sm:text-[13.5px] font-semibold ps-font
                       bg-white/[.06] border border-white/[.16]
                       transition-all duration-200 hover:bg-white/[.12] hover:-translate-y-[2px]
                       active:scale-[.98] disabled:opacity-40 disabled:cursor-not-allowed
@@ -381,18 +382,18 @@ export function ProductSpotlights() {
           <div className="ps-pulse-anim absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[100px] bg-indigo-500/10 pointer-events-none" />
 
           <div
-            className="ps-scalein relative w-full max-w-[820px] rounded-[20px] overflow-hidden border border-indigo-500/35 shadow-[0_24px_80px_rgba(99,102,241,0.22)]"
+            className="ps-scalein relative w-full max-w-[820px] rounded-2xl sm:rounded-[20px] overflow-hidden border border-indigo-500/35 shadow-[0_24px_80px_rgba(99,102,241,0.22)]"
             style={{ background: "linear-gradient(145deg,rgba(10,18,50,.99),rgba(5,10,30,.99))" }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* modal header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/[.08] bg-gradient-to-r from-blue-600/20 to-indigo-500/15">
-              <div className="flex items-center gap-[10px]">
-                <div className="ps-pulse-anim w-2 h-2 rounded-full bg-indigo-400" />
-                <span className="ps-font font-bold text-[15px] text-white">{videoModal.title}</span>
+            <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-white/[.08] bg-gradient-to-r from-blue-600/20 to-indigo-500/15">
+              <div className="flex items-center gap-[10px] min-w-0">
+                <div className="ps-pulse-anim w-2 h-2 rounded-full bg-indigo-400 flex-shrink-0" />
+                <span className="ps-font font-bold text-sm sm:text-[15px] text-white truncate">{videoModal.title}</span>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="text-white/35 text-xs">Now Playing</span>
+              <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                <span className="hidden sm:inline text-white/35 text-xs">Now Playing</span>
                 <button
                   onClick={closeModal}
                   className="w-[30px] h-[30px] rounded-lg flex items-center justify-center bg-white/[.08] hover:bg-red-500/80 text-white transition-colors duration-200"
@@ -427,7 +428,7 @@ export function ProductSpotlights() {
 
             {/* controls */}
             <div
-              className="flex items-center justify-between px-6 py-[14px] border-t border-white/[.06]"
+              className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-[14px] border-t border-white/[.06]"
               style={{ background: "rgba(5,10,30,.95)" }}
             >
               <button

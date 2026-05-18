@@ -86,7 +86,7 @@ export function KeyBenefits() {
   return (
     <section
       id="Benefits"
-      className="relative overflow-hidden px-6 lg:px-16 pt-24"
+      className="relative overflow-hidden px-4 sm:px-6 lg:px-16 xl:px-20 pt-16 sm:pt-20 lg:pt-24"
       style={{ background: 'linear-gradient(180deg,#020817 0%,#07112e 45%,#020817 100%)' }}
     >
       <style>{`
@@ -143,12 +143,12 @@ export function KeyBenefits() {
       />
 
       {/* ══════ CONTENT ══════ */}
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 max-w-7xl 2xl:max-w-[1500px] mx-auto">
 
         {/* Badge */}
-        <div className="kb-fadeup flex justify-center mb-7" style={{ animationDelay: '0s' }}>
+        <div className="kb-fadeup flex justify-center mb-6 sm:mb-7" style={{ animationDelay: '0s' }}>
           <div
-            className="kb-font inline-flex items-center gap-2 px-5 py-[6px] rounded-full text-[11px] font-bold tracking-[2px] uppercase"
+            className="kb-font inline-flex items-center gap-2 px-4 sm:px-5 py-[6px] rounded-full text-[10px] sm:text-[11px] font-bold tracking-[1.5px] sm:tracking-[2px] uppercase"
             style={{
               background: 'rgba(255,255,255,0.05)',
               border: '1px solid rgba(255,255,255,0.12)',
@@ -165,17 +165,17 @@ export function KeyBenefits() {
         </div>
 
         {/* Heading */}
-        <div className="kb-fadeup text-center mb-5" style={{ animationDelay: '0.08s' }}>
+        <div className="kb-fadeup text-center mb-4 sm:mb-5" style={{ animationDelay: '0.08s' }}>
           <h2
-            className="kb-font font-black uppercase leading-none tracking-tight text-white"
-            style={{ fontSize: 'clamp(2.4rem,5.4vw,4rem)' }}
+            className="kb-font font-black uppercase leading-[1.05] tracking-tight text-white"
+            style={{ fontSize: 'clamp(1.75rem,5.4vw,4rem)' }}
           >
             WHY TEAMS CHOOSE
           </h2>
           <h2
-            className="kb-font font-black uppercase leading-none tracking-tight"
+            className="kb-font font-black uppercase leading-[1.05] tracking-tight"
             style={{
-              fontSize: 'clamp(2.4rem,5.4vw,4rem)',
+              fontSize: 'clamp(1.75rem,5.4vw,4rem)',
               background: 'linear-gradient(90deg,#22d3ee 0%,#818cf8 50%,#22d3ee 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -188,14 +188,15 @@ export function KeyBenefits() {
 
         {/* Sub-heading */}
         <p
-          className="kb-fadeup kb-font text-center text-white text-base leading-relaxed mb-20"
+          className="kb-fadeup kb-font text-center text-white text-sm sm:text-base leading-relaxed mb-12 sm:mb-16 lg:mb-20 px-2"
           style={{ animationDelay: '0.14s' }}
         >
-          Powerful AI that amplifies your capabilities<br />without replacing the human touch
+          Powerful AI that amplifies your capabilities<br className="hidden sm:block" />
+          <span className="sm:hidden"> </span>without replacing the human touch
         </p>
 
         {/* ── Benefits Grid ── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
           {benefits.map((benefit, index) => (
             <div
               key={index}
@@ -203,11 +204,11 @@ export function KeyBenefits() {
               style={{ animationDelay: `${0.18 + index * 0.1}s` }}
             >
               {/* Image + pedestal */}
-              <div className="relative mb-7">
+              <div className="relative mb-5 sm:mb-7">
 
                 {/* Wide pedestal glow disc */}
                 <div
-                  className="kb-pulse-anim absolute -bottom-3 left-1/2 -translate-x-1/2 w-36 h-8 rounded-full"
+                  className="kb-pulse-anim absolute -bottom-3 left-1/2 -translate-x-1/2 w-24 sm:w-32 lg:w-36 h-6 sm:h-7 lg:h-8 rounded-full"
                   style={{
                     background: 'radial-gradient(ellipse, rgba(6,182,212,0.65) 0%, transparent 70%)',
                     filter: 'blur(10px)',
@@ -217,7 +218,7 @@ export function KeyBenefits() {
 
                 {/* Pedestal ring */}
                 <div
-                  className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-32 h-[10px] rounded-full"
+                  className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-20 sm:w-28 lg:w-32 h-[8px] sm:h-[9px] lg:h-[10px] rounded-full"
                   style={{
                     background: 'linear-gradient(180deg, rgba(6,182,212,0.22) 0%, rgba(6,182,212,0.04) 100%)',
                     border: '1px solid rgba(6,182,212,0.28)',
@@ -230,7 +231,7 @@ export function KeyBenefits() {
                     src={benefit.img}
                     alt={benefit.title}
                     draggable={false}
-                    className="w-48 h-48 object-contain transition-transform duration-300 group-hover:scale-110"
+                    className="w-28 h-28 sm:w-36 sm:h-36 lg:w-48 lg:h-48 object-contain transition-transform duration-300 group-hover:scale-110"
                     style={{ filter: 'drop-shadow(0 0 20px rgba(6,182,212,0.55))' }}
                   />
                 </div>
@@ -238,19 +239,19 @@ export function KeyBenefits() {
 
               {/* Title */}
               <h3
-                className="kb-font font-black uppercase tracking-tight text-white text-xl lg:text-[1.35rem] mb-3 transition-colors duration-300 group-hover:text-cyan-400"
+                className="kb-font font-black uppercase tracking-tight text-white text-base sm:text-lg lg:text-[1.35rem] mb-2 sm:mb-3 transition-colors duration-300 group-hover:text-cyan-400"
               >
                 {benefit.title}
               </h3>
 
               {/* Accent line */}
               <div
-                className="w-14 h-[2px] mb-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="w-12 sm:w-14 h-[2px] mb-2 sm:mb-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ background: 'linear-gradient(90deg, transparent, #22d3ee, transparent)' }}
               />
 
               {/* Description */}
-              <p className="kb-font text-white/55 text-sm lg:text-[0.88rem] leading-relaxed max-w-[180px] group-hover:text-white/80 transition-colors duration-300">
+              <p className="kb-font text-white/55 text-xs sm:text-sm lg:text-[0.88rem] leading-relaxed max-w-[160px] sm:max-w-[180px] group-hover:text-white/80 transition-colors duration-300">
                 {benefit.desc}
               </p>
             </div>
@@ -259,7 +260,7 @@ export function KeyBenefits() {
 
       </div>
 
-      <div id="Demo" className="relative z-10 left-1/2 mt-24 w-screen -translate-x-1/2 overflow-hidden bg-black">
+      <div id="Demo" className="relative z-10 left-1/2 mt-16 sm:mt-20 lg:mt-24 w-screen -translate-x-1/2 overflow-hidden bg-black">
         <video
           ref={videoRef}
           className="block h-auto w-full"
