@@ -25,9 +25,9 @@ const GithubIcon = () => (
 );
 
 const PRODUCTS = [
-  { name: "Digital Twin", url: "https://digitaltwin.techtrekkers.ai/" },
+  { name: "Digital Twin", url: "https://nettwin.techtrekkers.ai/" },
   { name: "Neo Scripting", url: "https://neoscript.techtrekkers.ai/" },
-  { name: "NexEstate AI", url: "https://estate.techtrekkers.ai/" },
+  { name: "NexEstate AI", url: "https://nexestate.techtrekkers.ai/" },
 ];
 
 // const SOCIALS = [

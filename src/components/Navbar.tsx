@@ -35,9 +35,9 @@ const TechtrekkersLogo = () => (
 );
 
 const productLinks = [
-  { label: "Digital Twin", target: "Product" },
-  { label: "Neo Scripting", target: "Product" },
-  { label: "Nex Estate AI", target: "Product" },
+  { label: "Digital Twin", url: "https://nettwin.techtrekkers.ai/" },
+  { label: "Neo Scripting", url: "https://neoscript.techtrekkers.ai/" },
+  { label: "Nex Estate AI", url: "https://nexestate.techtrekkers.ai/" },
 ];
 
 const navLinks = [
@@ -99,14 +99,23 @@ export default function Navbar() {
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-1 lg:gap-2">
           {navLinks.map((link) => (
-            <div key={link.label} className="relative">
+            <div
+              key={link.label}
+              className="relative"
+              onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.label)}
+              onMouseLeave={() => link.hasDropdown && setActiveDropdown(null)}
+            >
               <button
                 type="button"
                 className="flex items-center gap-1 px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors duration-150 rounded-lg hover:bg-white/5"
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
-                onClick={() => scrollToSection(link.target)}
-                onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.label)}
-                onMouseLeave={() => setActiveDropdown(null)}
+                onClick={() => {
+                  if (link.hasDropdown) {
+                    setActiveDropdown((cur) => (cur === link.label ? null : link.label));
+                  } else {
+                    scrollToSection(link.target);
+                  }
+                }}
               >
                 {link.label}
                 {link.hasDropdown && (
@@ -118,27 +127,31 @@ export default function Navbar() {
 
               {link.hasDropdown && activeDropdown === link.label && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-52 rounded-xl overflow-hidden z-50"
-                  style={{
-                    background: "rgba(15, 15, 28, 0.92)",
-                    backdropFilter: "blur(20px)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-                  }}
-                  onMouseEnter={() => setActiveDropdown(link.label)}
-                  onMouseLeave={() => setActiveDropdown(null)}
+                  className="absolute top-full left-0 pt-2 w-52 z-50"
                 >
-                  {productLinks.map((item) => (
-                    <button
-                      key={item.label}
-                      type="button"
-                      onClick={() => scrollToSection(item.target)}
-                      className="block w-full px-4 py-3 text-left text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
-                      style={{ fontFamily: "'DM Sans', sans-serif" }}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
+                  <div
+                    className="rounded-xl overflow-hidden"
+                    style={{
+                      background: "rgba(15, 15, 28, 0.92)",
+                      backdropFilter: "blur(20px)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+                    }}
+                  >
+                    {productLinks.map((item) => (
+                      <a
+                        key={item.label}
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setActiveDropdown(null)}
+                        className="block w-full px-4 py-3 text-left text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

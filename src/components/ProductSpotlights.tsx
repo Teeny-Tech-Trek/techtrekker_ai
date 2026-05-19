@@ -48,7 +48,7 @@ const PRODUCTS: Product[] = [
       "Intelligent conversations that nurture relationships",
       "Never miss an opportunity while offline",
     ],
-    url: "https://digitaltwin.techtrekkers.ai/",
+    url: "https://nettwin.techtrekkers.ai/",
     video: digitalTwinVideo,
   },
   {
@@ -70,7 +70,7 @@ const PRODUCTS: Product[] = [
       "Autonomous AI agents that get things done",
       "Save time and scale your operations",
     ],
-    url: "#",
+    url: "https://neoscript.techtrekkers.ai/",
     video: null,
   },
   {
@@ -92,7 +92,7 @@ const PRODUCTS: Product[] = [
       "Schedule viewings and handle routine tasks",
       "Your AI sales assistant, not replacement",
     ],
-    url: "https://estate.techtrekkers.ai/",
+    url: "https://nexestate.techtrekkers.ai/",
     video: realEstateVideo,
   },
 ];
