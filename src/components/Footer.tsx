@@ -80,7 +80,7 @@ export default function Footer() {
           {/* COL 1 — Brand */}
           <div>
             <div className="flex items-center gap-3 mb-5">
-              <img src="/Logo.png" alt="Logo" className="w-10 sm:w-11" />
+              <img src="https://li2nscbbak4vqitk.public.blob.vercel-storage.com/Logo.png" alt="Logo" className="w-10 sm:w-11" />
               <span className="text-white font-bold text-xl sm:text-[24px] tracking-tight leading-none">
                 Techtrekkers<span className="text-cyan-400">.ai</span>
               </span>
