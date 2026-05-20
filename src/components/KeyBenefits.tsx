@@ -4,7 +4,6 @@ export function KeyBenefits() {
   const [mounted, setMounted] = useState(false);
   const orbRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const keyBenefitsVideoSrc = '/TrekkersKeyBenefitsVideo.mp4';
   const stars = useMemo(
     () =>
       Array.from({ length: 65 }, (_, i) => ({
@@ -62,22 +61,22 @@ export function KeyBenefits() {
 
   const benefits = [
     {
-      img: '/KeyBenefitsImages/Clock.png',       // ← replace with your actual image path
+      img: 'https://li2nscbbak4vqitk.public.blob.vercel-storage.com/KeyBenefitsImages/Clock.png',       // ← replace with your actual image path
       title: 'ALWAYS AVAILABLE',
       desc: 'Your AI works around the clock, never missing an opportunity',
     },
     {
-      img: '/KeyBenefitsImages/Lightning.png',   // ← replace with your actual image path
+      img: 'https://li2nscbbak4vqitk.public.blob.vercel-storage.com/KeyBenefitsImages/Lightning.png',   // ← replace with your actual image path
       title: 'LIGHTNING FAST',
       desc: 'Instant responses that keep leads engaged and interested',
     },
     {
-      img: '/KeyBenefitsImages/Enterprise.png',      // ← replace with your actual image path
+      img: 'https://li2nscbbak4vqitk.public.blob.vercel-storage.com/KeyBenefitsImages/Enterprise.png',      // ← replace with your actual image path
       title: 'ENTERPRISE SECURITY',
       desc: 'Bank-level encryption and compliance standards',
     },
     {
-      img: '/KeyBenefitsImages/Proven.png',       // ← replace with your actual image path
+      img: 'https://li2nscbbak4vqitk.public.blob.vercel-storage.com/KeyBenefitsImages/Proven.png',       // ← replace with your actual image path
       title: 'PROVEN RESULTS',
       desc: '3x increase in lead conversion on average',
     },
@@ -264,7 +263,7 @@ export function KeyBenefits() {
         <video
           ref={videoRef}
           className="block h-auto w-full"
-          src={keyBenefitsVideoSrc}
+          src="https://li2nscbbak4vqitk.public.blob.vercel-storage.com/TrekkersKeyBenefitsVideo.mp4"
           muted
           playsInline
           preload="auto"

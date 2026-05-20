@@ -35,7 +35,7 @@ const TechtrekkersLogo = () => (
 );
 
 const productLinks = [
-  { label: "Digital Twin", url: "https://nettwin.techtrekkers.ai/" },
+  { label: "Net Twin", url: "https://nettwin.techtrekkers.ai/" },
   { label: "Neo Scripting", url: "https://neoscript.techtrekkers.ai/" },
   { label: "Nex Estate AI", url: "https://nexestate.techtrekkers.ai/" },
 ];
@@ -87,7 +87,7 @@ export default function Navbar() {
           onClick={() => scrollToSection("Home")}
           className="flex items-center gap-2 select-none shrink-0"
         >
-          <img src="/Logo.png" alt="logo" className="w-8 sm:w-10" />
+          <img src="https://li2nscbbak4vqitk.public.blob.vercel-storage.com/Logo.png" alt="logo" className="w-8 sm:w-10" />
           <span
             className="text-white font-semibold text-lg sm:text-xl md:text-2xl"
             style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif", letterSpacing: "-0.01em" }}

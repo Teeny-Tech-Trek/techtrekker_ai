@@ -397,9 +397,9 @@ const CARD_DEFS = [
     url:'https://nettwin.techtrekkers.ai/',
     cfg:{ seed:22, g0:'#0c0122',g1:'#1c054c',g2:'#14033a',
       glow:'#a855f7',shine:'#d8b4fe',
-      badgeBg0:'rgba(126,34,206,0.52)',badgeBg1:'rgba(88,28,135,0.22)',badge:'⬡  DIGITAL TWIN',
+      badgeBg0:'rgba(126,34,206,0.52)',badgeBg1:'rgba(88,28,135,0.22)',badge:'⬡  NET TWIN',
       iconBg0:'rgba(76,29,149,0.28)',iconBg1:'rgba(147,51,234,0.62)',iconChar:'⬡',
-      title:'Net Twin',sub:'Digital Twin Intelligence',
+      title:'Net Twin',sub:'Net Twin Intelligence',
       desc:'Simulate, analyze, and optimize real-world systems.',type:'city' },
   },
   {

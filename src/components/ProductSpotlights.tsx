@@ -30,9 +30,9 @@ interface Product {
 ───────────────────────────────────────────── */
 const PRODUCTS: Product[] = [
   {
-    id: "digital-twin",
-    title: "Digital Twin",
-    img: "../../public/ProductspotlightsImages/ChatGPT Image Apr 24, 2026, 02_12_54 PM.png",                       // ← your image path
+    id: "net-twin",
+    title: "Net Twin",
+    img: "https://li2nscbbak4vqitk.public.blob.vercel-storage.com/NetTwinImage.png",                       // ← your image path
     accent: "blue",
     accentHex: "#3B82F6",
     borderIdle: "border-blue-500/20",
@@ -42,7 +42,7 @@ const PRODUCTS: Product[] = [
     iconBgClass: "bg-gradient-to-br from-blue-700 to-blue-500 shadow-[0_4px_18px_rgba(59,130,246,0.45)]",
     icon: <User className="w-5 h-5 text-white" strokeWidth={2.2} />,
     description:
-      "Create an AI-Powered Digital Twin that represents you professionally. Your AI persona converses with clients 24/7, nurturing leads and answering questions when you're unavailable.",
+      "Create an AI-Powered Net Twin that represents you professionally. Your AI persona converses with clients 24/7, nurturing leads and answering questions when you're unavailable.",
     features: [
       "Personalized AI representation of your expertise",
       "Intelligent conversations that nurture relationships",
@@ -54,7 +54,7 @@ const PRODUCTS: Product[] = [
   {
     id: "neo-script",
     title: "Neo Script",
-    img: "/ProductspotlightsImages/ChatGPT Image Apr 24, 2026, 02_14_41 PM.png",                       // ← your image path
+    img: "https://li2nscbbak4vqitk.public.blob.vercel-storage.com/NeoScriptingImage.png",                       // ← your image path
     accent: "purple",
     accentHex: "#9333EA",
     borderIdle: "border-purple-500/20",
@@ -76,7 +76,7 @@ const PRODUCTS: Product[] = [
   {
     id: "nex-estate",
     title: "Nex Estate",
-    img: "../../public/ProductspotlightsImages/ChatGPT Image Apr 24, 2026, 02_16_24 PM.png",                       // ← your image path
+    img: "https://li2nscbbak4vqitk.public.blob.vercel-storage.com/NexEstate.png",                       // ← your image path
     accent: "teal",
     accentHex: "#0D9488",
     borderIdle: "border-teal-500/20",
@@ -287,13 +287,21 @@ export function ProductSpotlights() {
                   className="ps-float w-full h-full flex items-end justify-center"
                   style={{ animationDelay: `${idx * 0.6}s` }}
                 >
-                  <img
-                    src={p.img}
-                    alt={p.title}
-                    draggable={false}
-                    className="ps-img max-h-[160px] sm:max-h-[175px] lg:max-h-[190px] w-auto max-w-full object-contain"
-                    style={{ filter: `drop-shadow(0 0 22px ${p.accentHex}88)` }}
-                  />
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${p.title}`}
+                    className="pointer-events-auto cursor-pointer flex items-end justify-center w-full h-full transition-transform duration-300 hover:scale-105"
+                  >
+                    <img
+                      src={p.img}
+                      alt={p.title}
+                      draggable={false}
+                      className="ps-img max-h-[160px] sm:max-h-[175px] lg:max-h-[190px] w-auto max-w-full object-contain"
+                      style={{ filter: `drop-shadow(0 0 22px ${p.accentHex}88)` }}
+                    />
+                  </a>
                 </div>
               </div>
 

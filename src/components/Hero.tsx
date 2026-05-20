@@ -187,7 +187,7 @@ function Hero() {
             {/* Line 3 — Paragraph */}
             <p className="gsap-line max-w-xl text-sm leading-relaxed text-white/70 sm:text-base lg:text-lg">
               Techtrekkers.ai delivers intelligent AI agents that handle real work. From automation to
-              digital twins and real estate, we power your next big advantage.
+              net twins and real estate, we power your next big advantage.
             </p>
 
             {/* Line 4 — Buttons */}
