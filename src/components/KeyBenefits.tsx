@@ -259,10 +259,10 @@ export function KeyBenefits() {
 
       </div>
 
-      <div id="Demo" className="relative z-10 left-1/2 mt-16 sm:mt-20 lg:mt-24 w-screen -translate-x-1/2 overflow-hidden bg-black">
+      <div id="Demo" className="relative z-10 left-1/2 mt-16 sm:mt-20 lg:mt-24 w-screen -translate-x-1/2 overflow-hidden rounded-lg p-20">
         <video
           ref={videoRef}
-          className="block h-auto w-full"
+          className="block h-auto w-full rounded-lg"
           src="./Instagram_Reel_Format_A_man_in_a_gray_suit_and_blue_tie_walks_through_a_Z4Kca2zX.mp4"
           muted
           playsInline
