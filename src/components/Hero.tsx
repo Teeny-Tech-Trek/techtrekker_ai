@@ -105,6 +105,13 @@ function Hero() {
     }
   };
 
+  const scrollToDemo = () => {
+    const demoSection = document.getElementById('Demo');
+    if (demoSection) {
+      demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <section id="Home" className="hero-section relative min-h-screen overflow-hidden bg-slate-950">
       <div
@@ -201,7 +208,10 @@ function Hero() {
                 <span aria-hidden="true">&rarr;</span>
               </button>
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-5 py-3 sm:px-7 sm:py-3.5 text-sm sm:text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/15">
+              <button
+                onClick={scrollToDemo}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-5 py-3 sm:px-7 sm:py-3.5 text-sm sm:text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/15"
+              >
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
                   <svg className="h-2.5 w-2.5 fill-current" viewBox="0 0 8 10" aria-hidden="true">
                     <path d="M0 0v10l8-5z" />
