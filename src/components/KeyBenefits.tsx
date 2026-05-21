@@ -263,7 +263,7 @@ export function KeyBenefits() {
         <video
           ref={videoRef}
           className="block h-auto w-full"
-          src="https://li2nscbbak4vqitk.public.blob.vercel-storage.com/TrekkersKeyBenefitsVideo.mp4"
+          src="./Instagram_Reel_Format_A_man_in_a_gray_suit_and_blue_tie_walks_through_a_Z4Kca2zX.mp4"
           muted
           playsInline
           preload="auto"

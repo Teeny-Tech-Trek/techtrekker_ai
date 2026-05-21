@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { PlayCircle, X, ChevronRight, User, Code2, Building2 } from "lucide-react";
 
-import digitalTwinVideo from "../Images/Orion_ Digital Twin.mp4";
-import realEstateVideo from "../Images/ai agent final animation video.mp4";
+import netTwinVideo from "../../public/NetTwin_Brand_Assets_A_person_walks_down_a_dimly_lit_narrow_alleyway_IUdOukVG.mp4";
+import neoScriptVideo from "../../public/Website_Image_References_neo-scripting-explainermp4_0P_ewfI2.mp4";
+import nexEstateVideo from "../../public/NexEstate_Landing_Images_A_man_with_dark_hair_and_a_blue_shirt_stands_in_cKrI4Oh6.mp4";
 
 /* ─────────────────────────────────────────────
    Types
@@ -49,7 +50,7 @@ const PRODUCTS: Product[] = [
       "Never miss an opportunity while offline",
     ],
     url: "https://nettwin.techtrekkers.ai/",
-    video: digitalTwinVideo,
+    video: netTwinVideo,
   },
   {
     id: "neo-script",
@@ -71,7 +72,7 @@ const PRODUCTS: Product[] = [
       "Save time and scale your operations",
     ],
     url: "https://neoscript.techtrekkers.ai/",
-    video: null,
+    video: neoScriptVideo,
   },
   {
     id: "nex-estate",
@@ -93,7 +94,7 @@ const PRODUCTS: Product[] = [
       "Your AI sales assistant, not replacement",
     ],
     url: "https://nexestate.techtrekkers.ai/",
-    video: realEstateVideo,
+    video: nexEstateVideo,
   },
 ];
 

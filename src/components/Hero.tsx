@@ -268,7 +268,7 @@ function Hero() {
           top: 0;
           bottom: 0;
           right: 18px;
-          width: min(64vw, 1020px);
+          width: min(52vw, 920px);
         }
 
         .hero-copy {
@@ -278,21 +278,19 @@ function Hero() {
           justify-content: center;
         }
 
+        /* Overlay HATA diya — yeh left-dark / right-light split bana raha tha
+           jisse screen ke beech ek vertical line/seam dikh rahi thi. Cards ab
+           waise bhi right side pe hain (text ke upar nahi aate), isliye overlay
+           ki zaroorat nahi. Background ab poori width pe ekdum uniform hai, toh
+           text + 3D ek hi component jaisa lagta hai — koi divide line nahi. */
         .hero-overlay {
-          background: linear-gradient(
-            to right,
-            rgba(2,6,23,0.98) 0%,
-            rgba(2,6,23,0.92) 34%,
-            rgba(2,6,23,0.55) 56%,
-            rgba(2,6,23,0.15) 74%,
-            transparent 88%
-          );
+          display: none;
         }
 
         /* Ultra-wide monitors — keep proportions */
         @media (min-width: 1920px) {
           .hero-scene {
-            width: min(60vw, 1300px);
+            width: min(46vw, 1100px);
             right: 40px;
           }
           .hero-copy {
@@ -308,7 +306,7 @@ function Hero() {
             bottom: 0;
             right: 12px;
             top: 0;
-            width: min(65vw, 820px);
+            width: min(56vw, 720px);
           }
           .hero-copy {
             max-width: min(100%, 38rem);

@@ -42,8 +42,8 @@ export default function Footer() {
   const scrollToProducts = () => {
     const section = document.getElementById("Product");
     if (!section) return;
-    const navOffset = 72;
-    const top = section.getBoundingClientRect().top + window.scrollY - navOffset;
+    const extraOffset = 320;
+    const top = section.getBoundingClientRect().top + window.scrollY + extraOffset;
     window.scrollTo({ top, behavior: "smooth" });
   };
 

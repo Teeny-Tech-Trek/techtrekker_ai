@@ -1,13 +1,12 @@
 import { useRef, useMemo, Suspense, useEffect, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import * as THREE from 'three'
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  SEEDED PRNG                                                         */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function seededRng(seed) {
   let s = (seed >>> 0) || 1
   return () => {
@@ -15,11 +14,11 @@ function seededRng(seed) {
     return s / 0x100000000
   }
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  CANVAS 2D HELPERS                                                   */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function rrect(ctx, x, y, w, h, r) {
   const R = Math.min(r, w / 2, h / 2)
   ctx.beginPath()
@@ -34,7 +33,7 @@ function rrect(ctx, x, y, w, h, r) {
   ctx.arcTo(x,     y,     x + R, y,         R)
   ctx.closePath()
 }
-
+ 
 function wrapText(ctx, txt, x, y, maxW, lh) {
   const words = txt.split(' ')
   let line = ''
@@ -46,13 +45,13 @@ function wrapText(ctx, txt, x, y, maxW, lh) {
   }
   ctx.fillText(line, x, y)
 }
-
+ 
 const TEX_W = 800, TEX_H = 500, TEX_R = 55
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  FAST GRAIN  (ImageData — ~50× faster than fillRect loop)          */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function fastGrain(ctx, W, H, rng) {
   const tmp = document.createElement('canvas')
   tmp.width = W; tmp.height = H
@@ -71,11 +70,11 @@ function fastGrain(ctx, W, H, rng) {
   ctx.drawImage(tmp, 0, 0)
   ctx.restore()
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  ILLUSTRATIONS                                                       */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function drawPreview(ctx) {
   ctx.save()
   ctx.fillStyle = 'rgba(6,16,44,0.90)'
@@ -84,7 +83,7 @@ function drawPreview(ctx) {
   sh.addColorStop(0, 'rgba(147,197,253,0.12)'); sh.addColorStop(1, 'transparent')
   ctx.fillStyle = sh; rrect(ctx, 548, 138, 234, 334, 12); ctx.fill()
   ctx.restore()
-
+ 
   ctx.save()
   ctx.fillStyle = 'rgba(255,255,255,0.08)'; rrect(ctx, 549, 139, 232, 30, 11); ctx.fill()
   ;[[559,154,'#ff6b6b'],[571,154,'#ffd93d'],[583,154,'#6bcb77']].forEach(([x,y,c]) => {
@@ -93,7 +92,7 @@ function drawPreview(ctx) {
   ctx.fillStyle='rgba(147,197,253,0.85)'; ctx.font='600 10px monospace'
   ctx.textAlign='left'; ctx.fillText('workflow.agent.js',598,158)
   ctx.restore()
-
+ 
   const lines=[
     {w:0.72,c:'#93c5fd',i:0},{w:0.46,c:'#86efac',i:14},
     {w:0.83,c:'#93c5fd',i:14},{w:0.34,c:'#f9a8d4',i:14},
@@ -110,9 +109,9 @@ function drawPreview(ctx) {
     ctx.fillStyle=c+'30'; ctx.fillRect(582+i,ly-2,Math.round(w*(158-i)),14)
     ctx.restore()
   })
-
+ 
   ctx.save(); ctx.fillStyle='rgba(59,130,246,0.10)'; ctx.fillRect(549,236,232,26); ctx.restore()
-
+ 
   ctx.save()
   const bG=ctx.createLinearGradient(692,434,770,458)
   bG.addColorStop(0,'rgba(59,130,246,0.95)'); bG.addColorStop(1,'rgba(37,99,235,0.80)')
@@ -120,7 +119,7 @@ function drawPreview(ctx) {
   ctx.strokeStyle='rgba(147,197,253,0.50)'; ctx.lineWidth=1; rrect(ctx,692,434,78,24,6); ctx.stroke()
   ctx.fillStyle='#fff'; ctx.font='bold 11px system-ui'; ctx.textAlign='center'; ctx.fillText('▶  RUN',731,450)
   ctx.restore()
-
+ 
   ctx.save()
   ctx.fillStyle='#34d399'; ctx.beginPath(); ctx.arc(562,449,5.5,0,Math.PI*2); ctx.fill()
   ctx.globalCompositeOperation='screen'
@@ -128,17 +127,17 @@ function drawPreview(ctx) {
   ctx.restore()
   ctx.fillStyle='rgba(255,255,255,0.90)'; ctx.font='600 11px system-ui'
   ctx.textAlign='left'; ctx.fillText('ACTIVE',573,453)
-
+ 
   ctx.save(); ctx.strokeStyle='rgba(147,197,253,0.70)'; ctx.lineWidth=1.5
   rrect(ctx,548,138,234,334,12); ctx.stroke(); ctx.restore()
 }
-
+ 
 function drawCity(ctx, rng) {
   ctx.save()
   const skyG=ctx.createLinearGradient(548,138,548,430)
   skyG.addColorStop(0,'rgba(12,3,40,0.95)'); skyG.addColorStop(1,'rgba(28,6,58,0.78)')
   ctx.fillStyle=skyG; rrect(ctx,548,138,234,334,12); ctx.fill(); ctx.restore()
-
+ 
   for (let i=0;i<28;i++) {
     ctx.save(); ctx.fillStyle=`rgba(200,180,255,${0.25+rng()*0.60})`
     ctx.beginPath(); ctx.arc(558+rng()*214,144+rng()*160,rng()*1.5,0,Math.PI*2); ctx.fill(); ctx.restore()
@@ -162,12 +161,12 @@ function drawCity(ctx, rng) {
   hg.addColorStop(.85,'rgba(200,80,255,0.95)'); hg.addColorStop(1,'transparent')
   ctx.strokeStyle=hg; ctx.lineWidth=2.5
   ctx.beginPath(); ctx.moveTo(548,base); ctx.lineTo(782,base); ctx.stroke(); ctx.restore()
-
+ 
   ctx.save(); ctx.globalCompositeOperation='screen'
   const refG=ctx.createLinearGradient(548,base,548,base+60)
   refG.addColorStop(0,'rgba(160,50,255,0.40)'); refG.addColorStop(1,'transparent')
   ctx.fillStyle=refG; ctx.fillRect(548,base,234,60); ctx.restore()
-
+ 
   ctx.save(); ctx.globalCompositeOperation='screen'
   bldgs.forEach(({x,h,w})=>{
     const tg=ctx.createRadialGradient(x+w/2,base-h,0,x+w/2,base-h,26)
@@ -175,22 +174,22 @@ function drawCity(ctx, rng) {
     ctx.fillStyle=tg; ctx.fillRect(x-16,base-h-26,w+32,52)
   })
   ctx.restore()
-
+ 
   ctx.save(); ctx.strokeStyle='rgba(216,180,254,0.82)'; ctx.lineWidth=1.5
   rrect(ctx,548,138,234,334,12); ctx.stroke(); ctx.restore()
 }
-
+ 
 function drawHouse(ctx, rng) {
   ctx.save()
   const skyG=ctx.createLinearGradient(548,138,548,360)
   skyG.addColorStop(0,'rgba(3,16,30,0.95)'); skyG.addColorStop(1,'rgba(8,38,26,0.65)')
   ctx.fillStyle=skyG; rrect(ctx,548,138,234,334,12); ctx.fill(); ctx.restore()
-
+ 
   ctx.save(); ctx.globalCompositeOperation='screen'
   const mG=ctx.createRadialGradient(722,170,5,722,170,38)
   mG.addColorStop(0,'rgba(225,242,255,0.98)'); mG.addColorStop(.28,'rgba(160,205,255,0.52)'); mG.addColorStop(1,'transparent')
   ctx.fillStyle=mG; ctx.fillRect(686,138,74,74); ctx.restore()
-
+ 
   for (let i=0;i<24;i++){
     ctx.save(); ctx.fillStyle=`rgba(180,215,255,${0.28+rng()*0.58})`
     ctx.beginPath(); ctx.arc(558+rng()*212,142+rng()*148,rng()*1.5,0,Math.PI*2); ctx.fill(); ctx.restore()
@@ -200,14 +199,14 @@ function drawHouse(ctx, rng) {
   const wG=ctx.createLinearGradient(hx,hy-hh,hx+hw,hy)
   wG.addColorStop(0,'#1c3f28'); wG.addColorStop(1,'#0e2218')
   ctx.fillStyle=wG; ctx.fillRect(hx,hy-hh,hw,hh); ctx.restore()
-
+ 
   ctx.save()
   const rG=ctx.createLinearGradient(hx,hy-hh-56,hx+hw,hy-hh)
   rG.addColorStop(0,'#0c1e16'); rG.addColorStop(1,'#193824'); ctx.fillStyle=rG
   ctx.beginPath(); ctx.moveTo(hx-16,hy-hh); ctx.lineTo(hx+hw/2,hy-hh-56); ctx.lineTo(hx+hw+16,hy-hh); ctx.closePath(); ctx.fill()
   ctx.strokeStyle='rgba(0,210,150,0.38)'; ctx.lineWidth=1.5
   ctx.beginPath(); ctx.moveTo(hx-16,hy-hh); ctx.lineTo(hx+hw/2,hy-hh-56); ctx.lineTo(hx+hw+16,hy-hh); ctx.stroke(); ctx.restore();
-
+ 
   const windows = [[hx+14,hy-hh+14,36,28],[hx+hw-50,hy-hh+14,36,28]]
   windows.forEach(([wx,wy,ww,wh])=>{
     ctx.save()
@@ -219,14 +218,14 @@ function drawHouse(ctx, rng) {
     bG.addColorStop(0,'rgba(255,192,62,0.58)'); bG.addColorStop(1,'transparent')
     ctx.fillStyle=bG; ctx.fillRect(wx-22,wy-12,ww+44,wh+28); ctx.restore()
   })
-
+ 
   ctx.save(); ctx.fillStyle='#0a1810'; ctx.fillRect(hx+hw/2-17,hy-40,34,40); ctx.restore()
-
+ 
   ctx.save()
   const gG=ctx.createLinearGradient(548,hy,548,472)
   gG.addColorStop(0,'rgba(18,56,38,0.84)'); gG.addColorStop(1,'rgba(8,26,18,0.95)')
   ctx.fillStyle=gG; ctx.fillRect(548,hy,234,472-hy); ctx.restore()
-
+ 
   ctx.save()
   ctx.shadowColor='rgba(255,255,255,0.3)'; ctx.shadowBlur=6
   ctx.fillStyle='rgba(255,255,255,0.97)'; rrect(ctx,703,348,54,46,5); ctx.fill()
@@ -234,27 +233,27 @@ function drawHouse(ctx, rng) {
   ctx.textAlign='center'; ctx.fillText('FOR',730,368); ctx.fillText('SALE',730,383)
   ctx.strokeStyle='rgba(255,255,255,0.55)'; ctx.lineWidth=2
   ctx.beginPath(); ctx.moveTo(730,394); ctx.lineTo(730,416); ctx.stroke(); ctx.restore()
-
+ 
   ctx.save(); ctx.strokeStyle='rgba(94,234,212,0.82)'; ctx.lineWidth=1.5
   rrect(ctx,548,138,234,334,12); ctx.stroke(); ctx.restore()
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  CARD TEXTURE FACTORY                                                */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function makeCardTexture(cfg) {
   const C = document.createElement('canvas')
   C.width = TEX_W; C.height = TEX_H
   const ctx = C.getContext('2d')
   const rng = seededRng(cfg.seed || 42)
-
+ 
   // 1 — glass background
   ctx.save()
   const bgG=ctx.createLinearGradient(0,0,TEX_W*.8,TEX_H)
   bgG.addColorStop(0,cfg.g0+'f2'); bgG.addColorStop(.48,cfg.g1+'de'); bgG.addColorStop(1,cfg.g2+'ea')
   ctx.fillStyle=bgG; rrect(ctx,0,0,TEX_W,TEX_H,TEX_R); ctx.fill(); ctx.restore()
-
+ 
   // 2 — centre glow
   if (!cfg.disableGlow) {
     ctx.save(); ctx.globalCompositeOperation='screen'
@@ -262,31 +261,31 @@ function makeCardTexture(cfg) {
     cg.addColorStop(0,cfg.glow+'22'); cg.addColorStop(1,'transparent')
     ctx.fillStyle=cg; ctx.fillRect(0,0,TEX_W,TEX_H); ctx.restore()
   }
-
+ 
   // 3 — top-left shine
   ctx.save(); ctx.globalCompositeOperation='screen'
   const tlG=ctx.createLinearGradient(0,0,TEX_W*.52,TEX_H*.32)
   tlG.addColorStop(0,cfg.shine+'28'); tlG.addColorStop(1,'transparent')
   ctx.fillStyle=tlG; ctx.fillRect(0,0,TEX_W,TEX_H); ctx.restore()
-
+ 
   // 4 — top reflection
   ctx.save()
   const reflG=ctx.createLinearGradient(0,0,0,90)
   reflG.addColorStop(0,cfg.shine+'20'); reflG.addColorStop(1,'transparent')
   ctx.fillStyle=reflG; rrect(ctx,5,5,TEX_W-10,84,TEX_R-4); ctx.fill(); ctx.restore()
-
+ 
   // 5 — bottom vignette
   ctx.save()
   const botG=ctx.createLinearGradient(0,TEX_H-60,0,TEX_H)
   botG.addColorStop(0,'transparent'); botG.addColorStop(1,'rgba(0,0,0,0.25)')
   ctx.fillStyle=botG; ctx.fillRect(0,TEX_H-60,TEX_W,60); ctx.restore()
-
+ 
   // 6 — border
   ctx.save()
   const brdG=ctx.createLinearGradient(0,0,TEX_W,TEX_H)
   brdG.addColorStop(0,cfg.shine+'ee'); brdG.addColorStop(.4,cfg.shine+'55'); brdG.addColorStop(1,cfg.shine+'aa')
   ctx.strokeStyle=brdG; ctx.lineWidth=2.5; rrect(ctx,1.5,1.5,TEX_W-3,TEX_H-3,TEX_R); ctx.stroke(); ctx.restore()
-
+ 
   // 7 — badge
   ctx.save()
   const bdG=ctx.createLinearGradient(570,14,TEX_W-14,48)
@@ -295,7 +294,7 @@ function makeCardTexture(cfg) {
   ctx.strokeStyle=cfg.shine+'80'; ctx.lineWidth=1; rrect(ctx,570,13,TEX_W-584,30,15); ctx.stroke()
   ctx.fillStyle=cfg.shine; ctx.font='600 11px system-ui,sans-serif'
   ctx.textAlign='center'; ctx.fillText(cfg.badge,570+(TEX_W-584)/2,32); ctx.restore()
-
+ 
   // 8 — icon
   ctx.save()
   const iconG=ctx.createRadialGradient(51,70,4,51,70,34)
@@ -308,7 +307,7 @@ function makeCardTexture(cfg) {
   ctx.fillStyle=ig; ctx.fillRect(16,44,70,72); ctx.restore()
   ctx.save(); ctx.fillStyle=cfg.shine; ctx.font='700 22px system-ui'; ctx.textAlign='center'
   ctx.shadowColor=cfg.shine; ctx.shadowBlur=14; ctx.fillText(cfg.iconChar,51,88); ctx.shadowBlur=0; ctx.restore()
-
+ 
   // 9 — title
   ctx.save()
   ctx.fillStyle='#ffffff'
@@ -321,7 +320,7 @@ function makeCardTexture(cfg) {
   ctx.shadowBlur=8
   ctx.fillText(cfg.title,26,188)
   ctx.restore()
-
+ 
   // 10 — subtitle
   ctx.save()
   ctx.fillStyle='#eaf7ff'
@@ -331,7 +330,7 @@ function makeCardTexture(cfg) {
   ctx.shadowBlur=16
   ctx.fillText(cfg.sub,26,220)
   ctx.restore()
-
+ 
   // 11 — description
   ctx.save()
   ctx.fillStyle='rgba(255,255,255,0.95)'
@@ -340,13 +339,13 @@ function makeCardTexture(cfg) {
   ctx.shadowBlur=8
   wrapText(ctx,cfg.desc,26,258,450,24)
   ctx.restore()
-
+ 
   // 12 — divider
   ctx.save()
   const divG=ctx.createLinearGradient(26,300,500,300)
   divG.addColorStop(0,cfg.shine+'50'); divG.addColorStop(.6,cfg.shine+'20'); divG.addColorStop(1,'transparent')
   ctx.strokeStyle=divG; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(26,300); ctx.lineTo(500,300); ctx.stroke(); ctx.restore()
-
+ 
   // 13 — arrow button
   ctx.save()
   const abG=ctx.createRadialGradient(51,443,5,51,443,28)
@@ -357,26 +356,26 @@ function makeCardTexture(cfg) {
   rrect(ctx,22,424,58,58,15); ctx.fill(); ctx.restore()
   ctx.save(); ctx.fillStyle=cfg.shine; ctx.font='bold 22px system-ui'; ctx.textAlign='center'
   ctx.shadowColor=cfg.shine; ctx.shadowBlur=12; ctx.fillText('↗',51,460); ctx.shadowBlur=0; ctx.restore()
-
+ 
   // 14 — illustration
   if (cfg.type==='preview') drawPreview(ctx)
   if (cfg.type==='city')    drawCity(ctx,rng)
   if (cfg.type==='house')   drawHouse(ctx,rng)
-
+ 
   // 15 — grain
   fastGrain(ctx,TEX_W,TEX_H,rng)
-
+ 
   const tex=new THREE.CanvasTexture(C); tex.needsUpdate=true
   return tex
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  CARD DEFINITIONS                                                    */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 const CARD_DEFS = [
   {
-    w:5.4,h:3.4, pos:[0.2,3.55,0.0], rot:[-0.06,-0.10,0.05],
+    w:4.8,h:3.0, pos:[0.3,3.0,0.0], rot:[-0.06,-0.10,0.05],
     emissiveHex:'#071840', emissiveIntensity:0.55,
     edgeColor:'#3b82f6', lightColor:0x3b82f6, glowOpacity:0, lightIntensity:0,
     url:'https://neoscript.techtrekkers.ai/',
@@ -388,7 +387,7 @@ const CARD_DEFS = [
       desc:'Create, execute, and scale intelligent workflows with autonomous agents.',type:'preview' },
   },
   {
-    w:4.9,h:3.06, pos:[-2.05,-0.10,1.8], rot:[0.04,0.20,-0.04],
+    w:4.3,h:2.68, pos:[-1.65,-0.18,1.0], rot:[0.04,0.20,-0.04],
     emissiveHex:'#120328', emissiveIntensity:0.50,
     edgeColor:'#a855f7', lightColor:0xa855f7, glowOpacity:0.16,
     url:'https://nettwin.techtrekkers.ai/',
@@ -400,7 +399,7 @@ const CARD_DEFS = [
       desc:'Simulate, analyze, and optimize real-world systems.',type:'city' },
   },
   {
-    w:4.85,h:3.02, pos:[3.28,0.06,2.8], rot:[0.05,-0.16,0.03],
+    w:4.3,h:2.68, pos:[2.75,-0.14,1.2], rot:[0.05,-0.16,0.03],
     emissiveHex:'#011812', emissiveIntensity:0.50,
     edgeColor:'#14b8a6', lightColor:0x14b8a6, glowOpacity:0, lightIntensity:0,
     url:'https://nexestate.techtrekkers.ai/',
@@ -412,11 +411,11 @@ const CARD_DEFS = [
       desc:'Smarter property decisions and a fully automated sales pipeline.',type:'house' },
   },
 ]
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  GLOW TEXTURE CACHE                                                  */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 const glowTexCache = {}
 function getGlowTex(color) {
   if (glowTexCache[color]) return glowTexCache[color]
@@ -428,14 +427,14 @@ function getGlowTex(color) {
   const t=new THREE.CanvasTexture(C); t.needsUpdate=true
   return (glowTexCache[color]=t)
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  CONNECTION BEAMS  (FIX-v4-E: clamped endpoint, thinner tube)      */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 const ORB_Y   = -1.76
 const ORB_POS = [0, ORB_Y, 0]
-
+ 
 function ConnectionBeam({ startPos, endPos, color }) {
   const matRef = useRef()
   const curve  = useMemo(() => {
@@ -446,7 +445,7 @@ function ConnectionBeam({ startPos, endPos, color }) {
     return new THREE.QuadraticBezierCurve3(s,m,e)
   },[])
   const tubeGeo = useMemo(()=>new THREE.TubeGeometry(curve,24,0.008,5,false),[curve])
-
+ 
   useFrame(({clock})=>{
     if (matRef.current) matRef.current.opacity=0.14+Math.sin(clock.elapsedTime*2.0)*0.10
   })
@@ -457,11 +456,11 @@ function ConnectionBeam({ startPos, endPos, color }) {
     </mesh>
   )
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  CENTRAL ORB                                                         */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function CentralOrb() {
   const gemRef=useRef(), haloRef=useRef()
   useFrame(({clock:{elapsedTime:t}})=>{
@@ -490,11 +489,11 @@ function CentralOrb() {
     </group>
   )
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  PARTICLES                                                           */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function Particles({ count=90 }) {
   const ref=useRef()
   const {initPos,speeds}=useMemo(()=>{
@@ -507,7 +506,7 @@ function Particles({ count=90 }) {
     return {initPos,speeds}
   },[count])
   const livePos=useMemo(()=>initPos.slice(),[initPos])
-
+ 
   useFrame(({clock:{elapsedTime:t}})=>{
     if (!ref.current) return
     const p=ref.current.geometry.attributes.position.array
@@ -519,40 +518,40 @@ function Particles({ count=90 }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" array={livePos} count={count} itemSize={3}/>
       </bufferGeometry>
-      <pointsMaterial size={0.045} color="#ffffff" transparent opacity={0.32}
+      <pointsMaterial size={0.045} color="#ffffff" transparent opacity={0.16}
         blending={THREE.AdditiveBlending} depthWrite={false} sizeAttenuation/>
     </points>
   )
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  CARD                                                                */
 /*  FIX-v4-A: BoxGeometry (NOT RoundedBox) — correct UV mapping       */
 /*  FIX-v4-B: renderOrder layering stops z-fighting / blinking        */
 /*  FIX-v4-D: EdgesGeometry on BoxGeometry — no z-fighting with face  */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function Card({ def, phase }) {
   const meshRef=useRef(), haloRef=useRef(), edgesRef=useRef(), lightRef=useRef()
   const [hovered,setHovered]=useState(false)
   const hoverProg=useRef(0), entranceProg=useRef(0), entranceDelay=useRef(Math.min(phase*0.06,0.18))
   const ENTRANCE_DURATION=1
-
+ 
   const texture  = useMemo(()=>makeCardTexture(def.cfg),[def.cfg])
   const edgeGeo  = useMemo(()=>new THREE.BoxGeometry(def.w,def.h,0.052),[def.w,def.h])
   const glowTex  = useMemo(()=>getGlowTex(def.edgeColor),[def.edgeColor])
-
+ 
   useEffect(()=>{
     document.body.style.cursor=hovered?'pointer':''
     return ()=>{ document.body.style.cursor='' }
   },[hovered])
-
+ 
   const openCardUrl = (event) => {
     event.stopPropagation()
     if (!def.url) return
     window.open(def.url, '_blank', 'noopener,noreferrer')
   }
-
+ 
   useFrame(({clock:{elapsedTime:t}},delta)=>{
     if (entranceDelay.current>0) {
       entranceDelay.current=Math.max(0,entranceDelay.current-delta)
@@ -560,18 +559,18 @@ function Card({ def, phase }) {
       entranceProg.current=Math.min(1,entranceProg.current+delta/ENTRANCE_DURATION)
     }
     const ep=1-Math.pow(1-entranceProg.current,3)
-
+ 
     hoverProg.current+=(hovered?1:-1)*0.07
     hoverProg.current=Math.max(0,Math.min(1,hoverProg.current))
     const hp=hoverProg.current
-
+ 
     const dy=Math.sin(t*0.65+phase)*0.09
     const dx=Math.cos(t*0.45+phase)*0.032
     const px=def.pos[0]+dx
     const py=def.pos[1]+dy+(1-ep)*-3.5
     const pz=def.pos[2]+(1-ep)*-14+hp*0.40
     const sc=1+hp*0.032
-
+ 
     if (meshRef.current){
       meshRef.current.position.set(px,py,pz)
       meshRef.current.scale.setScalar(sc)
@@ -586,7 +585,7 @@ function Card({ def, phase }) {
       lightRef.current.intensity=lightBase === 0 ? 0 : lightBase+hp*4.5
     }
   })
-
+ 
   return (
     <>
       {/*
@@ -598,7 +597,7 @@ function Card({ def, phase }) {
         <meshBasicMaterial map={glowTex} transparent opacity={def.glowOpacity}
           blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false}/>
       </mesh>
-
+ 
       {/*
         FIX-v4-A: BoxGeometry (reverted from RoundedBox).
         BoxGeometry maps the 800×500 canvas texture correctly to the front face.
@@ -629,7 +628,7 @@ function Card({ def, phase }) {
           envMapIntensity={1.5}
         />
       </mesh>
-
+ 
       {/*
         FIX-v4-D: EdgesGeometry on BoxGeometry (reverted from RoundedEdgeLine).
         renderOrder=3 keeps it on top of both halo and card face.
@@ -639,12 +638,12 @@ function Card({ def, phase }) {
         <lineBasicMaterial color={def.edgeColor} transparent opacity={0.88}
           blending={THREE.AdditiveBlending} depthWrite={false}/>
       </lineSegments>
-
+ 
       <pointLight ref={lightRef} color={def.lightColor} intensity={def.lightIntensity ?? 3.5} distance={7} position={def.pos}/>
     </>
   )
 }
-
+ 
 /* ── Cards group — idle sway ── */
 function Cards() {
   const groupRef=useRef()
@@ -657,13 +656,13 @@ function Cards() {
     </group>
   )
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  PLATFORM                                                            */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 const PLATFORM_Y=-2.32
-
+ 
 function Platform() {
   const rimRef=useRef(),rim2Ref=useRef(),glowRef=useRef()
   const s1=useRef(),s2=useRef(),s3=useRef()
@@ -724,11 +723,11 @@ function Platform() {
     </group>
   )
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  LIGHTS                                                              */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function Lights() {
   const blRef=useRef(),plRef=useRef()
   useFrame(({clock:{elapsedTime:t}})=>{
@@ -750,17 +749,17 @@ function Lights() {
     </>
   )
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  SCENE FOG + RESPONSIVE CAMERA                                       */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function SceneFog() {
   const {scene}=useThree()
   useEffect(()=>{ scene.fog=new THREE.FogExp2(0x020818,0.038); return ()=>{ scene.fog=null } },[scene])
   return null
 }
-
+ 
 /* ── Content bounding box the camera auto-fits into ──
    Sirf yeh 4 numbers tweak karne hain agar kabhi cards bade/chhote ya
    framing alag chahiye. Camera ka distance viewport ke aspect-ratio se
@@ -768,11 +767,11 @@ function SceneFog() {
    aur extra khaali space minimum rehta hai.
    - Zyada space lage (cards chhote) → FIT_HALF_W / FIT_HALF_H thoda KAM karo.
    - Card kat raha ho       → FIT_HALF_W / FIT_HALF_H thoda BADHA do. */
-const FIT_CENTER  = [1.6, 1.0, 0.6]   // [x, y, z] — 3 cards ka visual centre
-const FIT_HALF_W  = 6.0               // horizontal half-extent to frame
-const FIT_HALF_H  = 4.4               // vertical half-extent to frame
-const FIT_PADDING = 1.08              // 8% breathing room
-
+const FIT_CENTER  = [1.65, 0.9, 0.4]  // [x, y, z] — 3 cards ka visual centre
+const FIT_HALF_W  = 5.35              // horizontal half-extent to frame
+const FIT_HALF_H  = 3.9               // vertical half-extent to frame
+const FIT_PADDING = 1.12              // 12% breathing room (cards thode chhote + margin)
+ 
 function FitCamera() {
   const {camera,size}=useThree()
   useEffect(()=>{
@@ -784,26 +783,26 @@ function FitCamera() {
     else if (w < 1440) fov = 50
     else               fov = 44
     camera.fov = fov
-
+ 
     const aspect = w / Math.max(1, size.height)
     const vFov   = (fov * Math.PI) / 180
     const distH  = FIT_HALF_H / Math.tan(vFov / 2)
     const hFov   = 2 * Math.atan(Math.tan(vFov / 2) * aspect)
     const distW  = FIT_HALF_W / Math.tan(hFov / 2)
     const dist   = Math.max(distH, distW) * FIT_PADDING
-
+ 
     camera.position.set(FIT_CENTER[0] + 0.05, FIT_CENTER[1] + 1.3, FIT_CENTER[2] + dist)
     camera.updateProjectionMatrix()
   },[size.width,size.height,camera])
   return null
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  SCENE GROUP — mouse parallax + scroll                              */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 const SCENE_OFFSET = [1.1, 0, 0]
-
+ 
 function SceneGroup({ mouse, scroll }) {
   const groupRef=useRef(), smoothScroll=useRef(0)
   useFrame(()=>{  
@@ -824,11 +823,11 @@ function SceneGroup({ mouse, scroll }) {
     </group>
   )
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  LOADING SHIMMER                                                     */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 function LoadingShimmer() {
   return (
     <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',
@@ -848,7 +847,7 @@ function LoadingShimmer() {
     </div>
   )
 }
-
+ 
 function SceneReady({ onReady }) {
   const didReport=useRef(false)
   useFrame(()=>{
@@ -858,11 +857,11 @@ function SceneReady({ onReady }) {
   })
   return null
 }
-
+ 
 /* ═══════════════════════════════════════════════════════════════════ */
 /*  MAIN EXPORT                                                         */
 /* ═══════════════════════════════════════════════════════════════════ */
-
+ 
 export default function Cards3D({ height='100%', onReady }={}) {
   const containerRef = useRef(null)
   const mouse  = useRef({x:0,y:0})
@@ -870,11 +869,11 @@ export default function Cards3D({ height='100%', onReady }={}) {
   const [loaded,setLoaded] = useState(false)
   const [isVisible,setIsVisible] = useState(true)
   const didNotifyReady = useRef(false)
-
+ 
   useEffect(()=>{
     const container = containerRef.current
     if (!container || !('IntersectionObserver' in window)) return
-
+ 
     const observer = new IntersectionObserver(
       ([entry])=>setIsVisible(entry.isIntersecting),
       { rootMargin:'220px 0px', threshold:0.01 }
@@ -882,7 +881,7 @@ export default function Cards3D({ height='100%', onReady }={}) {
     observer.observe(container)
     return ()=>observer.disconnect()
   },[])
-
+ 
   useEffect(()=>{
     const onMove=(e)=>{
       mouse.current.x= (e.clientX/window.innerWidth -0.5)*2
@@ -906,7 +905,7 @@ export default function Cards3D({ height='100%', onReady }={}) {
       window.removeEventListener('scroll',   onScroll)
     }
   },[])
-
+ 
   const handleSceneReady=()=>{
     setLoaded(true)
     if (!didNotifyReady.current){
@@ -914,12 +913,12 @@ export default function Cards3D({ height='100%', onReady }={}) {
       onReady?.()
     }
   }
-
+ 
   return (
     <div ref={containerRef} style={{width:'100%',height,position:'absolute',inset:0,overflow:'hidden',background:'transparent'}}>
-
+ 
       {!loaded && <LoadingShimmer/>}
-
+ 
       <Canvas
         shadows
         dpr={[1,2]}
@@ -934,13 +933,16 @@ export default function Cards3D({ height='100%', onReady }={}) {
           <FitCamera/>
           <Lights/>
           <SceneGroup mouse={mouse} scroll={scroll}/>
-
-          <EffectComposer>
-            <Bloom intensity={1.85} luminanceThreshold={0.14} luminanceSmoothing={0.9} mipmapBlur/>
-          </EffectComposer>
+ 
+          {/* Bloom/EffectComposer HATA diya — yeh canvas ko fully transparent
+              rehne nahi de raha tha (halka opaque tint daal raha tha), jisse
+              right-half ka background left se alag dikhta tha aur beech mein
+              seam line aati thi. Ab canvas ekdum transparent → background
+              poori width pe same. Cards ki glow ab material emissive + baked
+              texture-glow se aati hai (halki, par seam-free). */}
           <SceneReady onReady={handleSceneReady}/>
         </Suspense>
-
+ 
         {/*
           FIX-v4-C: OrbitControls back.
           enableDamping + dampingFactor for smooth inertia.

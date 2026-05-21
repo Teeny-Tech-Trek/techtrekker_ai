@@ -158,9 +158,9 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Desktop Right */}
+        Desktop Right
         <div className="hidden md:flex items-center">
-          <button
+          {/* <button
             type="button"
             onClick={() => scrollToSection("Product")}
             className="px-5 py-2 text-sm font-medium text-white rounded-full transition-all duration-200"
@@ -173,8 +173,8 @@ export default function Navbar() {
             onMouseEnter={(e) => { (e.currentTarget).style.background = "rgba(255,255,255,0.14)"; }}
             onMouseLeave={(e) => { (e.currentTarget).style.background = "rgba(255,255,255,0.08)"; }}
           >
-            Get Started
-          </button>
+            
+          </button> */}
         </div>
 
         {/* Mobile Hamburger — only on mobile */}
