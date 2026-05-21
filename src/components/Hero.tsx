@@ -262,9 +262,11 @@ function Hero() {
 
       <style>{`
         /* Default: large desktops / monitors — text LEFT half, 3D RIGHT half */
+        /* top/bottom set to 0 (was -8vh) so the canvas does NOT extend past the
+           section — removes the extra empty transparent space above & below. */
         .hero-scene {
-          top: -8vh;
-          bottom: -8vh;
+          top: 0;
+          bottom: 0;
           right: 18px;
           width: min(64vw, 1020px);
         }
@@ -279,10 +281,11 @@ function Hero() {
         .hero-overlay {
           background: linear-gradient(
             to right,
-            rgba(2,6,23,0.97) 0%,
-            rgba(2,6,23,0.85) 28%,
-            rgba(2,6,23,0.35) 52%,
-            transparent 72%
+            rgba(2,6,23,0.98) 0%,
+            rgba(2,6,23,0.92) 34%,
+            rgba(2,6,23,0.55) 56%,
+            rgba(2,6,23,0.15) 74%,
+            transparent 88%
           );
         }
 
@@ -299,11 +302,12 @@ function Hero() {
         }
 
         /* Tablets / small laptops */
+        /* top/bottom set to 0 (was -4vh) — same reason as above. */
         @media (max-width: 1024px) {
           .hero-scene {
-            bottom: -4vh;
+            bottom: 0;
             right: 12px;
-            top: -4vh;
+            top: 0;
             width: min(65vw, 820px);
           }
           .hero-copy {

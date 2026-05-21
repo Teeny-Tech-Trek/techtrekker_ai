@@ -1,6 +1,3 @@
-
-
-
 import { useRef, useMemo, Suspense, useEffect, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
@@ -764,29 +761,40 @@ function SceneFog() {
   return null
 }
 
-function ResponsiveCamera() {
+/* ── Content bounding box the camera auto-fits into ──
+   Sirf yeh 4 numbers tweak karne hain agar kabhi cards bade/chhote ya
+   framing alag chahiye. Camera ka distance viewport ke aspect-ratio se
+   recompute hota hai — isliye KISI bhi width pe koi card cut nahi hota
+   aur extra khaali space minimum rehta hai.
+   - Zyada space lage (cards chhote) → FIT_HALF_W / FIT_HALF_H thoda KAM karo.
+   - Card kat raha ho       → FIT_HALF_W / FIT_HALF_H thoda BADHA do. */
+const FIT_CENTER  = [1.6, 1.0, 0.6]   // [x, y, z] — 3 cards ka visual centre
+const FIT_HALF_W  = 6.0               // horizontal half-extent to frame
+const FIT_HALF_H  = 4.4               // vertical half-extent to frame
+const FIT_PADDING = 1.08              // 8% breathing room
+
+function FitCamera() {
   const {camera,size}=useThree()
   useEffect(()=>{
-    const w=size.width
-    if (w<380) {            // very small phones
-      camera.fov=72; camera.position.set(1.1,1.0,13.0)
-    } else if (w<480) {     // small phones
-      camera.fov=68; camera.position.set(1.1,1.2,12.6)
-    } else if (w<640) {     // phones
-      camera.fov=64; camera.position.set(1.1,1.4,12.2)
-    } else if (w<900) {     // tablets portrait
-      camera.fov=58; camera.position.set(1.2,1.6,12.0)
-    } else if (w<1024) {    // tablets landscape
-      camera.fov=58; camera.position.set(1.2,1.6,13.0)
-    } else if (w<1440) {    // laptops
-      camera.fov=50; camera.position.set(1.2,2.2,11.8)
-    } else if (w<1920) {    // desktops
-      camera.fov=46; camera.position.set(1.2,2.2,11.2)
-    } else {                // ultra-wide / 4K
-      camera.fov=42; camera.position.set(1.2,2.4,10.6)
-    }
+    const w = size.width
+    // fov thoda device ke hisaab se vary karta hai taaki look consistent rahe
+    let fov
+    if (w < 480)       fov = 62
+    else if (w < 900)  fov = 56
+    else if (w < 1440) fov = 50
+    else               fov = 44
+    camera.fov = fov
+
+    const aspect = w / Math.max(1, size.height)
+    const vFov   = (fov * Math.PI) / 180
+    const distH  = FIT_HALF_H / Math.tan(vFov / 2)
+    const hFov   = 2 * Math.atan(Math.tan(vFov / 2) * aspect)
+    const distW  = FIT_HALF_W / Math.tan(hFov / 2)
+    const dist   = Math.max(distH, distW) * FIT_PADDING
+
+    camera.position.set(FIT_CENTER[0] + 0.05, FIT_CENTER[1] + 1.3, FIT_CENTER[2] + dist)
     camera.updateProjectionMatrix()
-  },[size.width])
+  },[size.width,size.height,camera])
   return null
 }
 
@@ -923,7 +931,7 @@ export default function Cards3D({ height='100%', onReady }={}) {
       >
         <Suspense fallback={null}>
           <SceneFog/>
-          <ResponsiveCamera/>
+          <FitCamera/>
           <Lights/>
           <SceneGroup mouse={mouse} scroll={scroll}/>
 
@@ -944,11 +952,11 @@ export default function Cards3D({ height='100%', onReady }={}) {
           enablePan={false}
           enableDamping
           dampingFactor={0.07}
-          minDistance={6}
-          maxDistance={18}
+          minDistance={4}
+          maxDistance={40}
           minPolarAngle={Math.PI * 0.25}
           maxPolarAngle={Math.PI * 0.75}
-          target={[1.1, 0.5, 0]}
+          target={FIT_CENTER}
         />
       </Canvas>
     </div>
